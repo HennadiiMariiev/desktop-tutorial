@@ -106,3 +106,63 @@
 //     .catch(logError);
 
 //#endregion
+
+
+//#region ====== COLOR-PICKER
+const colors = [
+    '#FFFFFF',
+    '#2196F3',
+    '#4CAF50',
+    '#FF9800',
+    '#009688',
+    '#795548',
+  ];
+
+  const TIMEOUT = 1000;
+
+  const randomIntegerFromInterval = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  let timerHandler = null;
+
+  const startButton = document.querySelector('[data-action="start"]');
+  const stopButton = document.querySelector('[data-action="stop"]');
+  
+  stopButton.disabled = true;
+
+  startButton.addEventListener('click', onStartButtonClick);
+  stopButton.addEventListener('click', onStopButtonClick);
+
+  function onStartButtonClick() {
+      startButton.disabled = true;
+      stopButton.disabled = false;
+  
+      timerHandler = setTimeout(changeBodyColor, TIMEOUT);
+  }
+
+  function onStopButtonClick() {
+    startButton.disabled = false;
+    stopButton.disabled = true;
+
+    clearTimeout(timerHandler, TIMEOUT);
+  }
+
+  function changeBodyColor() {
+    // document.body.style.backgroundColor = colors[randomIntegerFromInterval(0, 5)];
+    
+    // with animation
+    const firstColor = colors[randomIntegerFromInterval(0, 5)];
+    console.log(firstColor);
+    const secondColor = colors[randomIntegerFromInterval(0, 5)];
+    document.body.animate([
+        {
+            backgroundColor: `${firstColor}`
+        },
+        {
+            backgroundColor: `${secondColor}`
+        },
+    ], TIMEOUT);
+    timerHandler = setTimeout(changeBodyColor, TIMEOUT);
+  }
+//#endregion
